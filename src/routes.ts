@@ -19,5 +19,6 @@ routes.use(auth);
 //Rotas chamadas pós autenticação
 routes.get("/users", userController.index);
 routes.get("/user/:id", userController.show);
+routes.put("/user", userController.update);
 
 export default routes;

@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import knex from "../database/connection";
 import * as Yup from "yup";
 import bcrypt from "bcrypt";
+import User from '../models/User'
+
 
 class UserController {
   async create(request: Request, response: Response) {
@@ -110,7 +112,7 @@ class UserController {
       }
     }
 
-    if (oldPassword && !(await user.checkPassword(oldPassword))) {
+    if (oldPassword && !(await User.checkPassword(oldPassword))) {
       return response.status(401).json({ error: "Password does not match" });
     }
 
