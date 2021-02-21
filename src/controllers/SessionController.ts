@@ -35,7 +35,7 @@ class SessionController {
     var token = jwt.sign({ id }, process.env.SECRET, {
       expiresIn: "300d", // expires in 300d
     });
-    return response.json({ auth: true, token: token });
+    return response.json({ auth: true, token: token, user });
   }
 
   async delete(request: Request, response: Response) {

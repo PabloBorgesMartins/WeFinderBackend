@@ -120,7 +120,7 @@ class UserController {
       id,
       name,
       last_name,
-      nick_name,
+      nickname,
       lanes,
       champion_pool,
       elo,
@@ -133,7 +133,7 @@ class UserController {
       id,
       name,
       last_name,
-      nick_name,
+      nickname,
       lanes,
       champion_pool,
       elo,
@@ -147,7 +147,7 @@ class UserController {
 
   //Busca todos usuários
   async index(request: Request, response: Response) {
-    const users = await knex("users").select("*");
+    const users = await knex("users").select("id", "name", "last_name", "nickname", "lanes", "champion_pool", "elo");
 
     return response.json(users);
   }
@@ -156,8 +156,8 @@ class UserController {
   async show(request: Request, response: Response) {
     const { id } = request.params;
 
-    //const user = await User.findOne({ where: { id } });
     const user = await knex("users").where("id", id).first();
+    // const user = await knex("users").where("id", id).first().select("id", "name", "last_name", "nickname", "lanes", "champion_pool", "elo");
 
     if (!user) {
       return response.status(400).json({ message: "Usuário não encontrado." });
