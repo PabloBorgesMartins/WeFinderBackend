@@ -1,5 +1,21 @@
-import Sequelize, { Model, DataType } from 'sequelize';
+import Sequelize, { Model, DataType, VirtualDataType } from 'sequelize';
 import bcrypt from 'bcryptjs';
+
+
+interface UserProps{
+  name: string;
+  last_name: string;
+  nickname: string;
+  lanes: string;
+  champion_pool: string;
+  elo: string;
+  cell_phone: number;
+  genre: string;
+  email: string;
+  password: string;
+  password_hash: string;
+  representative: boolean;
+}
 
 class User extends Model {
   static init(sequelize: DataType) {
@@ -7,17 +23,16 @@ class User extends Model {
       {
         name: Sequelize.STRING,
         last_name: Sequelize.STRING,
-        nick_name: Sequelize.STRING,
+        nickname: Sequelize.STRING,
         lanes: Sequelize.STRING,
         champion_pool: Sequelize.STRING,
         elo: Sequelize.STRING,
-        date_birth: Sequelize.STRING,
-        cell_phone: Sequelize.INTEGER,
         genre: Sequelize.STRING,
-        email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
-        password_hash: Sequelize.STRING,
         representative: Sequelize.BOOLEAN,
+        email: Sequelize.STRING,
+        whatsapp: Sequelize.STRING,
+        password_hash: Sequelize.STRING,
       },
       {
         sequelize,
@@ -29,7 +44,10 @@ class User extends Model {
         // eslint-disable-next-line no-param-reassign
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
-    });
+    }).catch((error) => {
+      console.log(`error -> ${error}`)
+    })
+    ;
     return this;
   }
 
