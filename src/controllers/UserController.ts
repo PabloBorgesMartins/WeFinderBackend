@@ -228,7 +228,7 @@ class UserController {
 
   //Busca todos usuários
   async index(request: Request, response: Response) {
-    const users = await knex("users").select("id", "name", "last_name", "nickname", "lanes", "champion_pool", "elo");
+    const users = await knex("users").select("id", "name", "last_name", "nickname", "champion_pool", "elo", "division");
 
     return response.json(users);
   }
