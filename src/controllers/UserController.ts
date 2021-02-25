@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import bcrypt from "bcrypt";
 import User from '../models/User'
 
+require("dotenv-safe").config();
+var jwt = require("jsonwebtoken");
 
 class UserController {
   async create(request: Request, response: Response) {
@@ -59,7 +61,7 @@ class UserController {
       representative,
     } = request.body;
 
-    const trx = await knex.transaction();
+    // const trx = await knex.transaction();
 
     const password_hash = await bcrypt.hash(password, 8);
 
@@ -83,11 +85,17 @@ class UserController {
       representative,
     };
 
-    await trx("users").insert(user);
+    // await trx("users").insert(user);
 
-    await trx.commit();
+    // await trx.commit();
 
-    return response.json(user);
+    const [id] = await knex("users").insert(user);
+
+    var token = jwt.sign({ id }, process.env.SECRET, {
+      expiresIn: "300d", // expires in 300d
+    });
+
+    return response.json({ auth: true, token, user });
   }
 
   async update(request: Request, response: Response) {
