@@ -22,8 +22,8 @@ app.use(routes);
 import { Request, Response } from "express";
 import knex from "./database/connection";
 import * as Yup from "yup";
-import ChatController from './controllers/ChatController'
-const chatController = new ChatController();
+// import ChatController from './controllers/ChatController'
+// const chatController = new ChatController();
 /*Database*/
 
 import http from "http";
