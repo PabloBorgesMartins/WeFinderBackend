@@ -28,6 +28,7 @@ class ChatController {
   }
 
   async index(request: Request, response: Response) {
+    console.log('entrou no chat.index')
     const { id } = request.body;
 
     const chats =

@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import routes from "./routes";
 
-const PORT = 3333;
+const PORT = 3335;
 
 require("dotenv-safe").config();
 var jwt = require("jsonwebtoken");
@@ -22,6 +22,8 @@ app.use(routes);
 import { Request, Response } from "express";
 import knex from "./database/connection";
 import * as Yup from "yup";
+import ChatController from './controllers/ChatController'
+const chatController = new ChatController();
 /*Database*/
 
 import http from "http";
@@ -72,6 +74,8 @@ io.on("connect", (socket) => {
     console.log(
       `A mensagem recebida foi essa = ${msg} username=${user.username} id=${user.id} room=${user.room}`
     );
+    // routes.get("/chat", chatController.index);
+    // app.routes.get("/chat", chatController.index);
     io.to(user.room).emit("message", formatMessage(user.username, msg));
   });
 
